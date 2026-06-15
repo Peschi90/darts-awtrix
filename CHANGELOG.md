@@ -1,0 +1,22 @@
+## 1.0.9
+- initial public release of darts-awtrix
+- AWTRIX 3 support via HTTP API only (`/api/notify`, `/api/custom`, `/api/switch`, `/api/settings`, `/api/power`, `/api/reboot`) - no MQTT
+- shared darts-caller signed-extension authentication (zero-touch)
+- per-event effect engine with template files (`community/templates/*.json`) and runtime overrides:
+  - `t:` text (with `{}` -> space and variables such as `{playername}`, `{score}`, `{points-left}`, `{p1-points-left}` .. `{p6-points-left}`, `{game-mode}`, `{game-mode-extra}`)
+  - `d:` duration in seconds (`0` = endless)
+  - `b:` brightness (`0..255`)
+  - `p:` scroll speed (`scrollSpeed`)
+  - `u:` text case (`textCase`: 0=global, 1=upper, 2=as sent)
+  - `e:` endpoint indices for multi-device targeting
+  - `i:` icon ID (LaMetric / AWTRIX gallery) or uploaded filename
+  - `c:` color (`#RRGGBB` / `RRGGBB` / `r,g,b`)
+  - `s:` sound (RTTTL name or DFplayer track id)
+- consistent three-tier priority for `DUR`, `BRI`, `SSPEED`, `TCOL`, `UPC`: runtime (`d:`/`b:`/`p:`/`c:`/`u:`) > template field > global CLI arg
+- endless events (effective duration <= 0) are dispatched as the persistent `darts_event` Custom App slot and stay on the matrix until the next event overrides them
+- idle event is always rendered as the persistent `darts_idle` Custom App and stays visible in the AWTRIX app rotation between throws
+- AWTRIX native apps (clock / date / temperature / humidity / battery) are disabled at startup and the device is rebooted once (~15 s) so only darts-driven content rotates on the matrix
+- `ATIME` is pinned to `0` so the active app / Custom App stays on screen until the next one is pushed
+- supports darts-caller events: app start, idle, game-start, match-start, game-won, match-won, busted, player-joined, player-left, score (`-S0` .. `-S180`), score area (`-A1` .. `-A12`), high-finish (`-HFO` / `-HF`), match-ended (replays `-AS`)
+- twelve ready-to-use templates shipped under `community/templates/` with matching LaMetric icon IDs
+- CLI args: `-CON`, `-AEPS`, `-TP`, `-BRI`, `-ABRI`, `-TEFF`, `-TSPEED`, `-TCOL`, `-SSPEED`, `-UPC`, `-DUR`, `-PWR`, `-ATR`, `-HFO`, `-HF`, `-AS`, `-IDE`, `-GS`, `-MS`, `-G`, `-M`, `-B`, `-PJ`, `-PL`, `-S{0..180}`, `-A{1..12}`, `-DEB`
