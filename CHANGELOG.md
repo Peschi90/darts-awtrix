@@ -1,4 +1,5 @@
-## 1.0.9
+## 1.0.10
+- new websocket connection handling with ping/pong and timeout
 - initial public release of darts-awtrix
 - AWTRIX 3 support via HTTP API only (`/api/notify`, `/api/custom`, `/api/switch`, `/api/settings`, `/api/power`, `/api/reboot`) - no MQTT
 - shared darts-caller signed-extension authentication (zero-touch)
